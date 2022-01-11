@@ -1,6 +1,7 @@
 body {
   --pegaeus: #645482;
   --pegaeus-light: #dacfee;
+  --pegaeus-lighter: #f3f0f8;
   --h: 25px;
   margin: 0;
   margin-top: var(--h);
@@ -22,13 +23,14 @@ div.top-bar {
   right: 0;
   padding: 0 0.8em;
   cursor: default;
+  height: var(--h);
+  font-size: calc(0.5 * var(--h));
 }
+
 .top-bar > div {
   display: flex;
   align-items: center;
-  height: var(--h);
-  line-height: calc(0.7 * var(--h));
-  font-size: calc(0.5 * var(--h));
+  height: 100%;
 }
 .top-bar span {
   padding: 0 0.8em;
@@ -62,6 +64,10 @@ pages-display .loader {
   opacity:var(--fade-factor);
   z-index: 1000;
 }
+pages-display .window {
+  width: 100%;
+  height: 100%;
+}
 
 my-loader {
   --scale-factor: 1;
@@ -76,13 +82,16 @@ my-loader svg {
 }
 
 
+
 .btn {
-  padding: 0.3em;
+  padding: 0 0.4em;
   background: var(--pegaeus);
   margin: 1em;
   cursor: pointer;
   border-radius: 0.5em;
   color: white;
+  line-height: 1.8em;
+  height: 1.8em;
 }
 
 login-form {
@@ -127,4 +136,128 @@ login-form td:first-of-type {
 }
 login-form .forgot {
   cursor: pointer;
+}
+
+.control-bar > div {
+  display: flex;
+  align-items: center;
+  height: 3em;
+}
+.control-bar {
+  height: 3em;
+  border-bottom: 1px solid var(--pegaeus);
+}
+.control-bar .add {
+  font-size: 2em;
+  padding: 0 0.5em;
+  cursor: pointer;
+}
+message-view {
+  margin: 1em;
+  display: block;
+  width: calc(100% - 2em);
+  height: calc(100% - 2em);
+  position: relative;
+}
+
+message-view .messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+message-view .add-message {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5em;
+  display: flex;
+}
+
+.add-message .btn {
+  margin-top: 0;
+}
+.add-message textarea {
+  outline: none;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  width: 90%;
+  height: calc(100% - 2px - 1em);
+  resize: none;
+}
+
+
+message-view .message-content {
+  max-width: 60%;
+  padding: 0.3em;
+  border-radius: 0.5em;
+  border: 1px solid var(--pegaeus);
+}
+
+message-view .message-name {
+  padding: 0.3em;
+}
+
+message-view div.from .message-content {
+  background: var(--pegaeus);
+  color: white;
+}
+
+message-view div.from > div {
+  float: right;
+}
+message-view div.to > div{
+  float: left;
+}
+
+.from + .from, .to + .to {
+  margin-top: 0.3em;
+}
+.to + .to .message-name, .from + .from .message-name{
+  color: transparent;
+}
+
+
+app-panel .main-tools{
+  height: calc(100% - 3em);
+  display: flex;
+}
+app-panel .main-tools > div:first-of-type {
+  width: 30%;
+}
+app-panel .main-tools > div:last-of-type {
+  width: 70%;
+}
+
+
+contacts-view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+contacts-view > div {
+  width: 50%;
+  height: 100%;
+  border-right: 1px solid var(--pegaeus);
+  cursor: pointer;
+}
+contacts-view > div > div {
+  width: 100%;
+  height: calc(100% - 2em);
+}
+contacts-view > div > p {
+  height: 2em;
+  padding: 0 0.5em;
+  margin: 0;
+  line-height: 2em;
+  background: var(--pegaeus-lighter);
+}
+contacts-view .contact {
+  padding: 0.5em;
+  border-bottom: 1px solid var(--pegaeus);
+}
+contacts-view .contact[selected='true'] {
+  background: var(--pegaeus-light);
 }

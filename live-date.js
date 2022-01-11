@@ -1,7 +1,6 @@
-import {SvgPlus, TBody} from "./4.js"
+import {SvgPlus} from "./4.js"
 
 class LiveDate extends SvgPlus {
-  #templates = {}
   constructor(el){
     super(el);
     setInterval(() => {

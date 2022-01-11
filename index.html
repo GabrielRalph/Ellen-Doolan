@@ -4,10 +4,13 @@
     <meta charset="utf-8">
     <title>Pegaeus</title>
     <link rel = "stylesheet" href = "./styles.css" />
+    <script type="module" src = "./message-view.js">\</script>
+    <script type="module" src = "./contacts-view.js">\</script>
     <script type="module" src = "./my-loader.js">\</script>
     <script type="module" src = "./login-form.js">\</script>
     <script type="module" src = "./live-date.js">\</script>
     <script type="module" src = "./pages-display.js">\</script>
+    <script type="module" src = "./app-panel.js">\</script>
   </head>
   <body>
     <div class = "top-bar">
@@ -53,7 +56,25 @@
         </login-form>
       </template>
       <template name = "app-panel">
-        TODO:
+
+        <app-panel>
+          <div class = "control-bar">
+            <div style = "float: right">
+              <span class = "add">+</span>
+            </div>
+          </div>
+          <div class = "main-tools">
+            <div>
+              <contacts-view></contacts-view>
+            </div>
+            <div>
+              <new-message-form></new-message-form>
+              <message-view></message-view>
+            </div>
+          </div>
+        </app-panel>
+
+
       </template>
       <div name = "loader">
         <my-loader>
@@ -70,6 +91,7 @@
     setTimeout(() => {
       pages.fade()
     }, 1435)
+
     pages.addEventListener("login", () => {
       let login = pages.pageElement;
       login.addEventListener("submit", () => {
@@ -79,7 +101,7 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
-    body {
+    body, textarea {
       font-family: 'Montserrat', sans-serif;
     }
   </style>

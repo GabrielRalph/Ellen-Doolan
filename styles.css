@@ -78,10 +78,11 @@ my-loader svg {
 
 .btn {
   padding: 0.3em;
-  border: 1px solid black;
+  background: var(--pegaeus);
   margin: 1em;
   cursor: pointer;
   border-radius: 0.5em;
+  color: white;
 }
 
 login-form {
@@ -92,6 +93,10 @@ login-form {
   right: 0;
   bottom: 0;
   background: var(--pegaeus-light);
+}
+login-form h1 {
+  text-align: center;
+  color: var(--pegaeus);
 }
 login-form > div {
   box-shadow: 0px 0px 5px white;

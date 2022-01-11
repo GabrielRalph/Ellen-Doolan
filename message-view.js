@@ -8,24 +8,36 @@ class Message extends SvgPlus {
     from = new Contact(from)+"";
     let isFrom = message.from+"" == from;
     this.class = isFrom ? "from" : "to";
-    if (isFrom) {
-      this.createChild("div", {
-        content: message.content,
-        class: "message-content"
-      });
-      this.createChild("div", {
-        content: message.from.name + ":",
-        class: "message-name"
-      })
+    let msg = this.createChild("div");
+    msg.createChild("div", {
+      content: message.from.name + ":",
+      class: "message-name"
+    })
+    msg.createChild("div", {
+      content: message.content,
+      class: "message-content"
+    });
+  }
+
+  get date(){
+    let date = (new Date()+"").split(" ");
+    let hr = date[4].split(":");
+    let m = hr[1];
+    hr = parseInt(hr[0]);
+    let ampm = "am";
+    if (hr > 12) {
+      hr -= 12;
+      ampm = "pm";
+    }
+    return `${hr}:${m} ${ampm}`
+  }
+
+  onclick(){
+    if (!this.read) {
+      this.read = this.createChild("p", {content: "read " + this.date})
     } else {
-      this.createChild("div", {
-        content: message.from.name + ":",
-        class: "message-name"
-      })
-      this.createChild("div", {
-        content: message.content,
-        class: "message-content"
-      });
+      this.removeChild(this.read);
+      this.read = false;
     }
   }
 }
@@ -69,6 +81,7 @@ class MessageView extends SvgPlus {
     if (this.contains(this.#addMessage)) {
       this.removeChild(this.#addMessage);
     }
+    this.#messagesBox.innerHTML = "";
   }
 
   setRecipients(from, to) {
@@ -95,6 +108,7 @@ class MessageView extends SvgPlus {
         content: this.#input.value
       })
       this.pushMessage(message, from);
+      this.#input.value = "";
     }
   }
 }

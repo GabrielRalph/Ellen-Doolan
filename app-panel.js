@@ -36,7 +36,8 @@ class AppPanel extends SvgPlus {
       "to": "garry~0~040303323",
       "content": "not really"
     })
-    console.log(messages);
+
+
     let contacts = this.querySelector("contacts-view");
     let messageView = this.querySelector("message-view");
     setTimeout(() => {
@@ -44,6 +45,9 @@ class AppPanel extends SvgPlus {
       messageView.messages = messages;
       contacts.addEventListener("select", () => {
         messageView.setRecipients(contacts.fromKey, contacts.toKey);
+      });
+      contacts.addEventListener("unselect", () => {
+        messageView.clear();
       });
     }, 5)
   }

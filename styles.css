@@ -164,8 +164,8 @@ message-view .messages {
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
+
 message-view .add-message {
   position: absolute;
   bottom: 0;
@@ -195,21 +195,35 @@ message-view .message-content {
   border-radius: 0.5em;
   border: 1px solid var(--pegaeus);
 }
-
 message-view .message-name {
   padding: 0.3em;
 }
 
-message-view div.from .message-content {
+message-view .messages > div {
+  display: flex;
+  flex-direction: column;
+}
+message-view .messages > div > div {
+  display: flex;
+  max-width: 60%;
+  align-items: flex-start;
+}
+message-view .messages > div > p{
+  margin: 0.1em 0;
+  font-size: 0.85em;
+  opacity: 0.5;
+}
+
+
+message-view .from .message-content {
   background: var(--pegaeus);
   color: white;
 }
-
-message-view div.from > div {
-  float: right;
+message-view .from {
+  align-items: flex-end;
 }
-message-view div.to > div{
-  float: left;
+message-view .from > div {
+  justify-content: flex-end;
 }
 
 .from + .from, .to + .to {

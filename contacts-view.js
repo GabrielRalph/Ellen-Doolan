@@ -25,9 +25,13 @@ class ContactsView extends SvgPlus {
       c_el.createChild("div", {content: contact.name})
       c_el.createChild("div", {content: contact.number})
       c_el.onclick = () => {
-        this.selectFrom(c_el);
-        this.setTo(messages.getContactsContacts(contact));
+        this.#selectFrom(c_el);
+        this.#setTo(messages.getContactsContacts(contact));
+        const event = new Event("unselect");
+        this.dispatchEvent(event);
       }
+      const event = new Event("unselect");
+      this.dispatchEvent(event);
     }
     this.#messages = messages;
   }
@@ -47,7 +51,7 @@ class ContactsView extends SvgPlus {
     return from;
   }
 
-  selectFrom(c_el) {
+  #selectFrom(c_el) {
     if (this.selected.from != null) {
       this.selected.from.props = {selected: ""}
     }
@@ -55,14 +59,16 @@ class ContactsView extends SvgPlus {
     this.selected.from = c_el;
     this.selected.to = null;
   }
-  selectTo(c_el) {
+
+  #selectTo(c_el) {
     if (this.selected.to != null) {
       this.selected.to.props = {selected: ""}
     }
     c_el.props = {selected: "true"}
     this.selected.to = c_el;
   }
-  setTo(contacts){
+
+  #setTo(contacts){
     this.to.innerHTML = "";
     for (let contact of contacts) {
       let c_el = this.to.createChild("div", {
@@ -72,7 +78,7 @@ class ContactsView extends SvgPlus {
       c_el.createChild("div", {content: contact.name})
       c_el.createChild("div", {content: contact.number})
       c_el.onclick = () => {
-        this.selectTo(c_el);
+        this.#selectTo(c_el);
         const event = new Event("select");
         this.dispatchEvent(event);
       }

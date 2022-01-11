@@ -1,5 +1,6 @@
 body {
   --pegaeus: #645482;
+  --pegaeus-light: #dacfee;
   --h: 25px;
   margin: 0;
   margin-top: var(--h);
@@ -20,8 +21,8 @@ div.top-bar {
   left: 0;
   right: 0;
   padding: 0 0.8em;
+  cursor: default;
 }
-
 .top-bar > div {
   display: flex;
   align-items: center;
@@ -29,7 +30,6 @@ div.top-bar {
   line-height: calc(0.7 * var(--h));
   font-size: calc(0.5 * var(--h));
 }
-
 .top-bar span {
   padding: 0 0.8em;
 }
@@ -46,10 +46,6 @@ div.top-bar {
   float: right;
 }
 
-live-date {
-
-}
-
 pages-display {
   display: block;
   position: relative;
@@ -62,10 +58,23 @@ pages-display .loader {
   left: 0;
   right: 0;
   bottom: 0;
-  background: white;
+  background: var(--pegaeus-light);
   opacity:var(--fade-factor);
   z-index: 1000;
 }
+
+my-loader {
+  --scale-factor: 1;
+}
+my-loader svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: calc(var(--scale-factor) * 30vmin);
+  fill: var(--pegaeus);
+}
+
 
 .btn {
   padding: 0.3em;
@@ -74,6 +83,7 @@ pages-display .loader {
   cursor: pointer;
   border-radius: 0.5em;
 }
+
 login-form {
   display: block;
   position: absolute;
@@ -81,7 +91,7 @@ login-form {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--pegaeus);
+  background: var(--pegaeus-light);
 }
 login-form > div {
   box-shadow: 0px 0px 5px white;

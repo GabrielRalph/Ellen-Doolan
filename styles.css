@@ -13,6 +13,18 @@ body {
   overflow: hidden;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 div.top-bar {
   font-family: "SF Pro";
   background: black;
@@ -147,11 +159,10 @@ login-form .forgot {
   height: 3em;
   border-bottom: 1px solid var(--pegaeus);
 }
-.control-bar .add {
-  font-size: 2em;
-  padding: 0 0.5em;
-  cursor: pointer;
+.control-bar > div > span {
+  margin: 0.75em;
 }
+
 message-view {
   margin: 1em;
   display: block;
@@ -189,8 +200,9 @@ message-view .add-message {
 }
 
 
+
 message-view .message-content {
-  max-width: 60%;
+
   padding: 0.3em;
   border-radius: 0.5em;
   border: 1px solid var(--pegaeus);
@@ -202,18 +214,24 @@ message-view .message-name {
 message-view .messages > div {
   display: flex;
   flex-direction: column;
+
 }
 message-view .messages > div > div {
   display: flex;
   max-width: 60%;
+  min-width: 50%;
   align-items: flex-start;
 }
 message-view .messages > div > p{
   margin: 0.1em 0;
   font-size: 0.85em;
   opacity: 0.5;
+  display: none;
 }
 
+message-view .messages > div.from:last-of-type p{
+  display: block;
+}
 
 message-view .from .message-content {
   background: var(--pegaeus);
@@ -274,4 +292,29 @@ contacts-view .contact {
 }
 contacts-view .contact[selected='true'] {
   background: var(--pegaeus-light);
+}
+
+.contact-form {
+  padding: 0.5em;
+  border-bottom: 1px solid var(--pegaeus);
+  border-right: 1px solid var(--pegaeus);
+}
+.contact-form div:nth-of-type(n+2) {
+  margin-top: 0.5em;
+}
+.contact-form input{
+  outline: none;
+  border: none;
+  font-size: 1em;
+}
+.contact-form .btn {
+  margin: 0;
+  float: right;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  padding: 0;
+  background: var(--pegaeus-light);
+  color: var(--pegaeus);
+  line-height: 1.5em;
 }

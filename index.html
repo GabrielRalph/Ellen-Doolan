@@ -5,7 +5,6 @@
     <title>Pegaeus</title>
     <link rel = "stylesheet" href = "./styles.css" />
     <script type="module" src = "./message-view.js">\</script>
-    <script type="module" src = "./message-form.js">\</script>
     <script type="module" src = "./contacts-view.js">\</script>
     <script type="module" src = "./my-loader.js">\</script>
     <script type="module" src = "./login-form.js">\</script>
@@ -57,19 +56,28 @@
         </login-form>
       </template>
       <template name = "app-panel">
-
         <app-panel>
           <div class = "control-bar">
+            <div style = "float: left">
+              <span name = "welcome-message"></span>
+            </div>
             <div style = "float: right">
-              <span class = "add">+</span>
+              <span onclick = "signOut()" class = "btn">sign-out</span>
             </div>
           </div>
           <div class = "main-tools">
             <div>
+              <form class = "contact-form" autocomplete="off">
+                <div>
+                  <span>Name: </span> <input name = "name" /> <div class = "btn" onclick = "addContact()">+</div>
+                </div>
+                <div>
+                  <span>Number: </span> <input type="number" name = "number" />
+                </div>
+              </form>
               <contacts-view></contacts-view>
             </div>
             <div>
-              <new-message-form></new-message-form>
               <message-view></message-view>
             </div>
           </div>
@@ -93,16 +101,43 @@
       pages.fade()
     }, 1435)
 
+    let username = "";
     pages.addEventListener("login", () => {
       let login = pages.pageElement;
       login.addEventListener("submit", () => {
-        pages.goto("app-panel")
+        username = login.username;
+        pages.goto("app-panel");
       })
+    });
+
+    pages.addEventListener("app-panel", () => {
+      let app = pages.pageElement;
+      app.setAttribute("welcome", `${username}`)
     })
+
+    function signOut(){
+      pages.goto("login");
+    }
+    function addContact(){
+      try{
+        let contacts = document.querySelector("contacts-view");
+        let form = document.querySelector("form.contact-form");
+        let name = form.querySelector("input[name='name']");
+        let number = form.querySelector("input[name='number']");
+        if (name.value && number.value) {
+          contacts.addContact({name: name.value, number: number.value})
+          name.value = "";
+          number.value = "";
+        }
+      }catch(e){
+        console.log(e);
+      }
+    }
+
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
-    body, textarea {
+    body, textarea, input{
       font-family: 'Montserrat', sans-serif;
     }
   </style>

@@ -30,7 +30,9 @@ class Message{
   #from = "invalid";
   #content = "";
   #ts = 0;
+
   constructor(obj, prefix = ""){
+    this.read = false;
     try{
       if (typeof obj === "object" && obj) {
         this.#to = new Contact(obj[prefix + "to"]);
@@ -68,44 +70,51 @@ class Message{
 
 class Messages{
   #messages = {};
-  constructor(data){
+
+  addContact(contact) {
+    contact = new Contact(contact);
+    if (!(contact in this.#messages)) {
+      this.#messages[contact] = {};
+    }
   }
 
   addMessage(formObj){
     let message = new Message(formObj);
-    console.log(message);
-    let hashA = message.to;
-    let hashB = message.from;
-    if (!(hashA in this.#messages)) this.#messages[hashA] = {};
-    if (!(hashB in this.#messages)) this.#messages[hashB] = {};
-    if (!(hashB in this.#messages[hashA])) this.#messages[hashA][hashB] = [];
-    if (!(hashA in this.#messages[hashB])) this.#messages[hashB][hashA] = [];
-    this.#messages[hashA][hashB].push(message);
-    this.#messages[hashB][hashA].push(message);
+    let from = message.from;
+    let to = message.to;
+
+    this.addContact(to);
+    this.addContact(from);
+
+    if (!(to in this.#messages[from])) this.#messages[from][to] = [];
+    if (!(from in this.#messages[to])) this.#messages[to][from] = [];
+
+    this.#messages[from][to].push(message);
+    this.#messages[to][from].push(message);
 
     return message;
   }
 
   get contacts(){
-    return this.getContactsKeys(this.#messages);
-  }
-
-  getContactsKeys(obj) {
     let contacts = [];
-    for (let key in obj) {
+    for (let key in this.#messages) {
       contacts.push(new Contact(key))
     }
     return contacts;
   }
 
-  getContactsContacts(contact) {
-    let contact_hash = new Contact(contact) + "";
-    let messages = this.#messages[contact_hash];
-    return this.getContactsKeys(messages);
+
+  getContactsOf(contact) {
+    contact = new Contact(contact) + "";
+    let contacts = [];
+    for (let key in this.#messages) {
+      if (key != contact) contacts.push(new Contact(key))
+    }
+    return contacts;
   }
 
   getMessagesBetween(from, to) {
-    let a = null;
+    let a = [];
     if (from in this.#messages && to in this.#messages[from]) {
       a = this.#messages[from][to];
     }

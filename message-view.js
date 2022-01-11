@@ -3,6 +3,7 @@ import {Messages, Contact} from "./Messages.js"
 
 
 class Message extends SvgPlus {
+  #read = null
   constructor(message, from) {
     super("div");
     from = new Contact(from)+"";
@@ -17,9 +18,20 @@ class Message extends SvgPlus {
       content: message.content,
       class: "message-content"
     });
+    if (message.read != false) {
+      this.read(message.read);
+    }
+    this.onclick = () => {
+      console.log(message);
+      if (message.read == false) {
+        let time = this.time;
+        message.read = time;
+        this.read(time);
+      }
+    }
   }
 
-  get date(){
+  get time(){
     let date = (new Date()+"").split(" ");
     let hr = date[4].split(":");
     let m = hr[1];
@@ -32,12 +44,16 @@ class Message extends SvgPlus {
     return `${hr}:${m} ${ampm}`
   }
 
-  onclick(){
-    if (!this.read) {
-      this.read = this.createChild("p", {content: "read " + this.date})
+  read(date){
+    if (date == null && this.contains(this.#read)) {
+      this.removeChild(this.#read)
     } else {
-      this.removeChild(this.read);
-      this.read = false;
+      if (this.#read == null) {
+        this.#read = this.createChild("p", {content: "read " + date})
+      } else {
+        this.removeChild(this.#read);
+      }
+      this.#read.innerHTML = "read " + date
     }
   }
 }

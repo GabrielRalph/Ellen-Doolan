@@ -51,7 +51,7 @@
           </div>
         </login-form>
       </template>
-      <template name = "app-pannel">
+      <template name = "app-panel">
         TODO:
       </template>
       <div name = "loader">
@@ -63,9 +63,13 @@
   <script>
     let pages = document.querySelector("body > pages-display");
     setTimeout(() => {
-      pages.fade()}, 1000)
+      pages.fade()
+    }, 1000)
     pages.addEventListener("login", () => {
       let login = pages.pageElement;
+      login.addEventListener("submit", () => {
+        pages.goto("app-panel")
+      })
     })
   </script>
   <style>

@@ -30,25 +30,58 @@ class Message{
   #from = "invalid";
   #content = "";
   #ts = 0;
-
-  constructor(obj, prefix = ""){
-    this.read = false;
+  #read = false;
+  constructor(obj){
     try{
+      if (obj instanceof Message) {
+        obj = obj + "";
+      }
       if (typeof obj === "object" && obj) {
-        this.#to = new Contact(obj[prefix + "to"]);
-        this.#from = new Contact(obj[prefix + "from"]);
-        this.#content = obj[prefix + "content"];
-        this.#ts = new Date().getTime()
+        this.#to = new Contact(obj["to"]);
+        this.#from = new Contact(obj["from"]);
+        this.#content = obj["content"];
+        this.#ts = new Date().getTime();
       } else if (typeof obj === "string") {
         let split = obj.split("~1~");
-        this.#to = new Contact(split[0]);
-        this.#from = new Contact(split[1]);
-        this.#content = split[2];
-        this.#ts = parseInt(split[3]);
+        if (split.length > 2) {
+          this.#to = new Contact(split[0]);
+          this.#from = new Contact(split[1]);
+          this.#content = split[2];
+        }
+        if (split.length > 3) {
+          this.#ts = parseInt(split[3]);
+        }
+        if (split.length > 4) {
+          this.#read = parseInt(split[4]);
+        }
       }
     }catch(e) {
       console.log(e);
     }
+  }
+
+  #updateListeners = [];
+  addUpdateListener(cb) {
+    if (cb instanceof Function) {
+      this.updateListeners.push(cb);
+    }
+  }
+  update(){
+    if (this.onupdate instanceof Function) {
+      this.onupdate();
+    }
+    for (let cb of this.#updateListeners) {
+      cb();
+    }
+  }
+
+  set read(value){
+    this.#read = value
+    this.update()
+  }
+
+  get read(){
+    return this.#read;
   }
 
   get to(){
@@ -70,6 +103,11 @@ class Message{
 
 class Messages{
   #messages = {};
+  #message_list = [];
+
+  contains(message) {
+    return this.#message_list.indexOf(message) != -1;
+  }
 
   addContact(contact) {
     contact = new Contact(contact);
@@ -91,8 +129,25 @@ class Messages{
 
     this.#messages[from][to].push(message);
     this.#messages[to][from].push(message);
+    this.#message_list.push(message);
 
     return message;
+  }
+
+  removeMessage(message) {
+    if (this.contains(message)) {
+      let array = this.#messages[message.from][message.to];
+      let idx = array.indexOf(message);
+      array.splice(idx, 1);
+
+      array = this.#messages[message.to][message.from];
+      idx = array.indexOf(message);
+      array.splice(idx, 1);
+
+      array = this.#message_list;
+      idx = array.indexOf(message);
+      array.splice(idx, 1);
+    }
   }
 
   get contacts(){
@@ -102,7 +157,6 @@ class Messages{
     }
     return contacts;
   }
-
 
   getContactsOf(contact) {
     contact = new Contact(contact) + "";
@@ -122,5 +176,4 @@ class Messages{
   }
 }
 
-
-export {Messages, Contact}
+export {Messages, Message, Contact}

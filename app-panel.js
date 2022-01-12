@@ -11,16 +11,16 @@ class AppPanel extends SvgPlus {
   }
 
   update(){
-    let contacts = this.querySelector("contacts-view");
-    let messageView = this.querySelector("message-view");
+    let vContacts = this.querySelector("v-contacts");
+    let vMessages = this.querySelector("v-messages");
     setTimeout(() => {
-      contacts.messages = messages;
-      messageView.messages = messages;
-      contacts.addEventListener("select", () => {
-        messageView.setRecipients(contacts.fromKey, contacts.toKey);
+      vContacts.messages = messages;
+      vMessages.messages = messages;
+      vContacts.addEventListener("select", () => {
+        vMessages.vContacts = vContacts;
       });
-      contacts.addEventListener("unselect", () => {
-        messageView.clear();
+      vContacts.addEventListener("unselect", () => {
+        vMessages.clear();
       });
     }, 5)
   }

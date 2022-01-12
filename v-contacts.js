@@ -1,31 +1,32 @@
 import {SvgPlus, SvgPath, Vector} from "./4.js"
-
-class ContactsView extends SvgPlus {
+import {Contact} from "./Messages.js"
+class VContacts extends SvgPlus {
   #messages = null;
   constructor(el){
     super(el);
     let from_box = this.createChild("div");
     from_box.createChild("p", {content: "from"});
-    this.from = from_box.createChild("div");
+    this.fromCol = from_box.createChild("div");
 
     let to_box = this.createChild("div");
     to_box.createChild("p", {content: "to"});
-    this.to = to_box.createChild("div");
+    this.toCol = to_box.createChild("div");
     this.selected = {from: null, to: null};
   }
 
   set messages(messages) {
     let contacts = messages.contacts;
-    this.from.innerHTML = "";
-    this.to.innerHTML = "";
-    
+    this.fromCol.innerHTML = "";
+    this.toCol.innerHTML = "";
+
     for (let contact of contacts) {
-      let c_el = this.from.createChild("div", {
+      let c_el = this.fromCol.createChild("div", {
         class: "contact",
         key: contact + "",
       });
-      c_el.createChild("div", {content: contact.name})
-      c_el.createChild("div", {content: contact.number})
+      c_el.createChild("div", {content: contact.name});
+      c_el.createChild("div", {content: contact.number});
+
       c_el.onclick = () => {
         this.#selectFrom(c_el);
         this.#setTo(messages.getContactsOf(contact));
@@ -43,17 +44,18 @@ class ContactsView extends SvgPlus {
     this.messages = this.#messages;
   }
 
-  get toKey(){
+  get to(){
     let to = this.selected.to;
     if (to != null){
-      to = to.getAttribute("key")
+      to = new Contact(to.getAttribute("key"))
     }
     return to;
   }
-  get fromKey(){
+
+  get from(){
     let from = this.selected.from;
     if (from != null){
-      from = from.getAttribute("key")
+      from = new Contact(from.getAttribute("key"));
     }
     return from;
   }
@@ -74,9 +76,9 @@ class ContactsView extends SvgPlus {
     this.selected.to = c_el;
   }
   #setTo(contacts){
-    this.to.innerHTML = "";
+    this.toCol.innerHTML = "";
     for (let contact of contacts) {
-      let c_el = this.to.createChild("div", {
+      let c_el = this.toCol.createChild("div", {
         class: "contact",
         key: contact,
       });
@@ -92,4 +94,4 @@ class ContactsView extends SvgPlus {
 }
 
 
-SvgPlus.defineHTMLElement(ContactsView);
+SvgPlus.defineHTMLElement(VContacts);

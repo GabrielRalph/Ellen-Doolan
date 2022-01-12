@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>Pegaeus</title>
     <link rel = "stylesheet" href = "./styles.css" />
-    <script type="module" src = "./message-view.js">\</script>
-    <script type="module" src = "./contacts-view.js">\</script>
+    <script type="module" src = "./v-messages.js">\</script>
+    <script type="module" src = "./v-contacts.js">\</script>
     <script type="module" src = "./my-loader.js">\</script>
     <script type="module" src = "./login-form.js">\</script>
     <script type="module" src = "./live-date.js">\</script>
@@ -75,10 +75,10 @@
                   <span>Number: </span> <input type="number" name = "number" />
                 </div>
               </form>
-              <contacts-view></contacts-view>
+              <v-contacts></v-contacts>
             </div>
             <div>
-              <message-view></message-view>
+              <v-messages></v-messages>
             </div>
           </div>
         </app-panel>
@@ -120,7 +120,7 @@
     }
     function addContact(){
       try{
-        let contacts = document.querySelector("contacts-view");
+        let contacts = document.querySelector("v-contacts");
         let form = document.querySelector("form.contact-form");
         let name = form.querySelector("input[name='name']");
         let number = form.querySelector("input[name='number']");

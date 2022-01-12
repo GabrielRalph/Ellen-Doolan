@@ -163,7 +163,7 @@ login-form .forgot {
   margin: 0.75em;
 }
 
-message-view {
+v-messages {
   margin: 1em;
   display: block;
   width: calc(100% - 2em);
@@ -171,13 +171,13 @@ message-view {
   position: relative;
 }
 
-message-view .messages {
+v-messages .messages {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-message-view .add-message {
+v-messages .add-message {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -201,46 +201,46 @@ message-view .add-message {
 
 
 
-message-view .message-content {
+v-messages .message-content {
 
   padding: 0.3em;
   border-radius: 0.5em;
   border: 1px solid var(--pegaeus);
 }
-message-view .message-name {
+v-messages .message-name {
   padding: 0.3em;
 }
 
-message-view .messages > div {
+v-messages .messages > div {
   display: flex;
   flex-direction: column;
 
 }
-message-view .messages > div > div {
+v-messages .messages > div > div {
   display: flex;
   max-width: 60%;
   min-width: 50%;
   align-items: flex-start;
 }
-message-view .messages > div > p{
+v-messages .messages > div > p{
   margin: 0.1em 0;
   font-size: 0.85em;
   opacity: 0.5;
   display: none;
 }
 
-message-view .messages > div.from:last-of-type p{
+v-messages .messages > div.from:last-of-type p{
   display: block;
 }
 
-message-view .from .message-content {
+v-messages .from .message-content {
   background: var(--pegaeus);
   color: white;
 }
-message-view .from {
+v-messages .from {
   align-items: flex-end;
 }
-message-view .from > div {
+v-messages .from > div {
   justify-content: flex-end;
 }
 
@@ -264,33 +264,33 @@ app-panel .main-tools > div:last-of-type {
 }
 
 
-contacts-view {
+v-contacts {
   width: 100%;
   height: 100%;
   display: flex;
 }
-contacts-view > div {
+v-contacts > div {
   width: 50%;
   height: 100%;
   border-right: 1px solid var(--pegaeus);
   cursor: pointer;
 }
-contacts-view > div > div {
+v-contacts > div > div {
   width: 100%;
   height: calc(100% - 2em);
 }
-contacts-view > div > p {
+v-contacts > div > p {
   height: 2em;
   padding: 0 0.5em;
   margin: 0;
   line-height: 2em;
   background: var(--pegaeus-lighter);
 }
-contacts-view .contact {
+v-contacts .contact {
   padding: 0.5em;
   border-bottom: 1px solid var(--pegaeus);
 }
-contacts-view .contact[selected='true'] {
+v-contacts .contact[selected='true'] {
   background: var(--pegaeus-light);
 }
 
@@ -298,22 +298,34 @@ contacts-view .contact[selected='true'] {
   padding: 0.5em;
   border-bottom: 1px solid var(--pegaeus);
   border-right: 1px solid var(--pegaeus);
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form > div{
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .contact-form div:nth-of-type(n+2) {
   margin-top: 0.5em;
 }
+.contact-form span {opacity: 0.65;}
 .contact-form input{
   outline: none;
   border: none;
   font-size: 1em;
+  padding-left: 0.5em;
 }
 .contact-form .btn {
   margin: 0;
-  float: right;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 1.5em;
   height: 1.5em;
   text-align: center;
-  padding: 0;
   background: var(--pegaeus-light);
   color: var(--pegaeus);
   line-height: 1.5em;

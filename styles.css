@@ -1,7 +1,8 @@
 body {
-  --pegaeus: #645482;
-  --pegaeus-light: #dacfee;
-  --pegaeus-lighter: #f3f0f8;
+  --pegasus: #645482;
+  --pegasus-light: #dacfee;
+  --pegasus-lighter: #f3f0f8;
+  --pegasus-dark: #0a0218;
   --h: 25px;
   margin: 0;
   margin-top: var(--h);
@@ -11,6 +12,8 @@ body {
   right: 0;
   bottom: 0;
   overflow: hidden;
+  background: var(--pegasus-dark);
+  color: var(--pegasus-lighter);
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -24,10 +27,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+input {
+  background: transparent;
+  color: var(--pegasus-lighter);
+}
 
 div.top-bar {
   font-family: "SF Pro";
-  background: black;
+  background-image: url("bar.png");
+  background-size: cover;
   color: white;
   position: fixed;
   top: 0;
@@ -72,7 +80,7 @@ pages-display .loader {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--pegaeus-light);
+  background: var(--pegasus-dark);
   opacity:var(--fade-factor);
   z-index: 1000;
 }
@@ -90,18 +98,16 @@ my-loader svg {
   left: 50%;
   transform: translate(-50%, -50%);
   height: calc(var(--scale-factor) * 30vmin);
-  fill: var(--pegaeus);
+  fill: var(--pegasus-light);
 }
-
-
 
 .btn {
   padding: 0 0.4em;
-  background: var(--pegaeus);
+  background: var(--pegasus-lighter);
   margin: 1em;
   cursor: pointer;
   border-radius: 0.5em;
-  color: white;
+  color: var(--pegasus);
   line-height: 1.8em;
   height: 1.8em;
 }
@@ -113,20 +119,18 @@ login-form {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--pegaeus-light);
 }
 login-form h1 {
   text-align: center;
-  color: var(--pegaeus);
 }
 login-form > div {
-  box-shadow: 0px 0px 5px white;
+  box-shadow: 0px 0px 5px var(--pegasus);
   padding: 3em;
   border-radius: 3em;
   position: absolute;
   top: 50%;
   left: 50%;
-  background: white;
+  background: var(--pegasus);
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -138,7 +142,7 @@ login-form > div > div {
 login-form input {
   font-family: 'Montserrat', sans-serif;
   outline: none;
-  border: 1px solid black;
+  border: 1px solid white;
   font-size: 1em;
   border-radius: 0.5em;
   padding: 0.25em;
@@ -157,7 +161,7 @@ login-form .forgot {
 }
 .control-bar {
   height: 3em;
-  border-bottom: 1px solid var(--pegaeus);
+  border-bottom: 1px solid var(--pegasus-lighter);
 }
 .control-bar > div > span {
   margin: 0.75em;
@@ -191,7 +195,9 @@ v-messages .add-message {
 }
 .add-message textarea {
   outline: none;
-  border: 1px solid black;
+  background: transparent;
+  color: var(--pegasus-lighter);
+  border: 1px solid var(--pegasus-lighter);
   border-radius: 0.5em;
   padding: 0.5em;
   width: 90%;
@@ -205,7 +211,7 @@ v-messages .message-content {
 
   padding: 0.3em;
   border-radius: 0.5em;
-  border: 1px solid var(--pegaeus);
+  border: 1px solid var(--pegasus-lighter);
 }
 v-messages .message-name {
   padding: 0.3em;
@@ -234,7 +240,7 @@ v-messages .messages > div.from:last-of-type p{
 }
 
 v-messages .from .message-content {
-  background: var(--pegaeus);
+  background: var(--pegasus);
   color: white;
 }
 v-messages .from {
@@ -272,7 +278,7 @@ v-contacts {
 v-contacts > div {
   width: 50%;
   height: 100%;
-  border-right: 1px solid var(--pegaeus);
+  border-right: 1px solid var(--pegasus-lighter);
   cursor: pointer;
 }
 v-contacts > div > div {
@@ -284,20 +290,21 @@ v-contacts > div > p {
   padding: 0 0.5em;
   margin: 0;
   line-height: 2em;
-  background: var(--pegaeus-lighter);
+  background: var(--pegasus);
 }
 v-contacts .contact {
   padding: 0.5em;
-  border-bottom: 1px solid var(--pegaeus);
+  border-bottom: 1px solid var(--pegasus-lighter);
 }
 v-contacts .contact[selected='true'] {
-  background: var(--pegaeus-light);
+  background: var(--pegasus-light);
+  color: var(--pegasus)
 }
 
 .contact-form {
   padding: 0.5em;
-  border-bottom: 1px solid var(--pegaeus);
-  border-right: 1px solid var(--pegaeus);
+  border-bottom: 1px solid var(--pegasus-lighter);
+  border-right: 1px solid var(--pegasus-lighter);
   display: flex;
   flex-direction: column;
 }
@@ -326,7 +333,7 @@ v-contacts .contact[selected='true'] {
   width: 1.5em;
   height: 1.5em;
   text-align: center;
-  background: var(--pegaeus-light);
-  color: var(--pegaeus);
+  background: var(--pegasus-light);
+  color: var(--pegasus);
   line-height: 1.5em;
 }

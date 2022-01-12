@@ -217,7 +217,7 @@ v-messages .message-content {
 
   padding: 0.3em;
   border-radius: 0.5em;
-  border: 1px solid var(--pegasus-lighter);
+  /* border: 1px solid var(--pegasus-lighter); */
 }
 v-messages .message-name {
   padding: 0.3em;
@@ -246,8 +246,9 @@ v-messages .messages > div.from:last-of-type p{
 }
 
 v-messages .from .message-content {
-  background: var(--pegasus);
+  /* background: var(--pegasus); */
   color: white;
+  border: none;
 }
 v-messages .from {
   align-items: flex-end;

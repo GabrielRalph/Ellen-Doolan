@@ -49,7 +49,7 @@ class VMessage extends SvgPlus {
 
   set message(message){
     if (message instanceof Message) {
-      this.messageName.innerHTML = message.from.name;
+      this.messageName.innerHTML = message.from.name + ": ";
       this.messageContent.innerHTML = message.content;
       message.vMessage = this;
       this.#message = message;

@@ -2,11 +2,11 @@ import {SvgPlus} from "./4.js"
 import {Messages, Message, Contact} from "./Messages.js"
 
 class VMessage extends SvgPlus {
-  #read = new SvgPlus("p");
-  #message = null;
-  #messageName = null;
-  #messageContent = null;
-  #VMessages = null;
+  _read = new SvgPlus("p");
+  _message = null;
+  _messageName = null;
+  _messageContent = null;
+  _VMessages = null;
 
   constructor(message, vMessages) {
     super("div");
@@ -29,16 +29,16 @@ class VMessage extends SvgPlus {
 
   set vMessages(mv){
     if (SvgPlus.is(mv, VMessages)) {
-      this.#VMessages = mv;
+      this._VMessages = mv;
       let isFrom = mv.from + "" == this.message.from + "";
       this.class = isFrom ? "from" : "to"
     } else {
-      this.#VMessages = null;
+      this._VMessages = null;
       this.class = "";
     }
   }
   get vMessages(){
-    return this.#VMessages;
+    return this._VMessages;
   }
 
   delete(){
@@ -52,7 +52,7 @@ class VMessage extends SvgPlus {
       this.messageName.innerHTML = message.from.name + ": ";
       this.messageContent.innerHTML = message.content;
       message.vMessage = this;
-      this.#message = message;
+      this._message = message;
 
       this.read(message.read);
       message.onupdate = () => {
@@ -69,10 +69,10 @@ class VMessage extends SvgPlus {
         this.delete();
       }
     } else {
-      this.#message = null;
+      this._message = null;
     }
   }
-  get message(){return this.#message;}
+  get message(){return this._message;}
 
   get time(){
     let date = (new Date()+"").split(" ");
@@ -89,31 +89,31 @@ class VMessage extends SvgPlus {
 
   read(date){
     if (!date) {
-      if (this.contains(this.#read)) this.removeChild(this.#read)
+      if (this.contains(this._read)) this.removeChild(this._read)
     } else {
-      this.#read.innerHTML = "read " + date
-      if (!this.contains(this.#read)) this.appendChild(this.#read);
+      this._read.innerHTML = "read " + date
+      if (!this.contains(this._read)) this.appendChild(this._read);
     }
   }
 }
 
 class VMessages extends SvgPlus {
-  #messagesBox = null;
-  #addMessageBox = null;
-  #messages = null;
-  #send = null;
-  #input = null;
-  #_from = null;
-  #to = null;
+  _messagesBox = null;
+  _addMessageBox = null;
+  _messages = null;
+  _send = null;
+  _input = null;
+  __from = null;
+  _to = null;
   constructor(el){
     super(el);
     this.innerHTML = "";
-    this.#messagesBox = this.createChild("div", {class: "messages"});
+    this._messagesBox = this.createChild("div", {class: "messages"});
     let addMessage = new SvgPlus("div");
     addMessage.class = "add-message";
-    this.#input = addMessage.createChild("textarea");
-    this.#send = addMessage.createChild("span", {content: "send", class: "btn"});
-    this.#addMessageBox = addMessage;
+    this._input = addMessage.createChild("textarea");
+    this._send = addMessage.createChild("span", {content: "send", class: "btn"});
+    this._addMessageBox = addMessage;
   }
 
   set vContacts(contacts) {
@@ -123,45 +123,45 @@ class VMessages extends SvgPlus {
 
   set messages(messages){
     if (messages instanceof Messages) {
-      this.#messages = messages;
+      this._messages = messages;
     }else {
-      this.#messages = null;
+      this._messages = null;
     }
     this.update();
   }
   get messages(){
-    return this.#messages;
+    return this._messages;
   }
 
   set from(value){
     if (value != null) {
-      this.#_from = new Contact(value) + "";
+      this.__from = new Contact(value) + "";
     } else {
-      this.#_from = null;
+      this.__from = null;
     }
     this.update();
   }
   get from(){
-    if (this.#_from == null) {
+    if (this.__from == null) {
       return null;
     } else {
-      return new Contact(this.#_from);
+      return new Contact(this.__from);
     }
   }
 
   set to(value){
     if (value != null) {
-      this.#to = new Contact(value) + "";
+      this._to = new Contact(value) + "";
     } else {
-      this.#to = null;
+      this._to = null;
     }
     this.update();
   }
   get to(){
-    if (this.#to == null) {
+    if (this._to == null) {
       return null;
     } else {
-      return new Contact(this.#to);
+      return new Contact(this._to);
     }
   }
 
@@ -174,7 +174,7 @@ class VMessages extends SvgPlus {
     }
 
     if (message instanceof Message) {
-      this.#messagesBox.appendChild(new VMessage(message, this))
+      this._messagesBox.appendChild(new VMessage(message, this))
     }
   }
 
@@ -191,16 +191,16 @@ class VMessages extends SvgPlus {
       this.messages.removeMessage(message);
     }
 
-    if (this.#messagesBox.contains(vMessage)) {
-      this.#messagesBox.removeChild(vMessage);
+    if (this._messagesBox.contains(vMessage)) {
+      this._messagesBox.removeChild(vMessage);
     }
   }
 
   clear(){
-    if (this.contains(this.#addMessageBox)) {
-      this.removeChild(this.#addMessageBox);
+    if (this.contains(this._addMessageBox)) {
+      this.removeChild(this._addMessageBox);
     }
-    this.#messagesBox.innerHTML = "";
+    this._messagesBox.innerHTML = "";
   }
 
   update() {
@@ -217,26 +217,26 @@ class VMessages extends SvgPlus {
     messages = messages.getMessagesBetween(from, to);
 
     //add message input box
-    if (!this.contains(this.#addMessageBox)) {
-      this.appendChild(this.#addMessageBox);
+    if (!this.contains(this._addMessageBox)) {
+      this.appendChild(this._addMessageBox);
     }
 
     //add all messages
-    this.#messagesBox.innerHTML = "";
+    this._messagesBox.innerHTML = "";
     for (let message of messages) {
       this.addMessage(message);
     }
 
     //clear message input textarea
-    this.#input.value = "";
+    this._input.value = "";
 
-    this.#send.onclick = () => {
+    this._send.onclick = () => {
       let message = this.addMessage({
         from: from,
         to: to,
-        content: this.#input.value
+        content: this._input.value
       })
-      this.#input.value = "";
+      this._input.value = "";
     }
   }
 }

@@ -2,15 +2,15 @@ import {SvgPlus, TBody} from "./4.js"
 
 
 class LoginForm extends SvgPlus {
-  #username = "";
-  #password = "";
+  _username = "";
+  _password = "";
   constructor(el){
     super(el);
     this.makeInputBoxes();
   }
 
-  get username(){return this.#username;}
-  get password(){return this.#password;}
+  get username(){return this._username;}
+  get password(){return this._password;}
 
   makeInputBoxes(){
     let inputBoxes = this.querySelector("div[name='input-boxes']");
@@ -28,8 +28,8 @@ class LoginForm extends SvgPlus {
 
     let loginBtn = document.querySelector("div[class='btn']");
     loginBtn.onclick = () => {
-      this.#username = username.value;
-      this.#password = password.value;
+      this._username = username.value;
+      this._password = password.value;
       const event = new Event("submit");
       this.dispatchEvent(event);
     }

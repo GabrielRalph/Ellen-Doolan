@@ -7,7 +7,7 @@ async function wait(t){
 }
 
 class PagesDisplay extends SvgPlus {
-  #templates = {}
+  _templates = {}
   constructor(el){
     super(el);
 
@@ -17,7 +17,7 @@ class PagesDisplay extends SvgPlus {
       templates[template.getAttribute("name")] = template.innerHTML;
     }
 
-    this.#templates = templates;
+    this._templates = templates;
 
     let loader = this.querySelector("div[name='loader']").innerHTML;
 
@@ -28,8 +28,8 @@ class PagesDisplay extends SvgPlus {
   }
 
   set template(value){
-    if (value in this.#templates) {
-      this.window.innerHTML = this.#templates[value];
+    if (value in this._templates) {
+      this.window.innerHTML = this._templates[value];
       const event = new Event(value);
       this.dispatchEvent(event);
     }

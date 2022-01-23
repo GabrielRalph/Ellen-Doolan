@@ -1,7 +1,7 @@
 import {SvgPlus, SvgPath, Vector} from "./4.js"
 import {Contact} from "./Messages.js"
 class VContacts extends SvgPlus {
-  #messages = null;
+  _messages = null;
   constructor(el){
     super(el);
     let from_box = this.createChild("div");
@@ -28,20 +28,20 @@ class VContacts extends SvgPlus {
       c_el.createChild("div", {content: contact.number});
 
       c_el.onclick = () => {
-        this.#selectFrom(c_el);
-        this.#setTo(messages.getContactsOf(contact));
+        this._selectFrom(c_el);
+        this._setTo(messages.getContactsOf(contact));
         const event = new Event("unselect");
         this.dispatchEvent(event);
       }
       const event = new Event("unselect");
       this.dispatchEvent(event);
     }
-    this.#messages = messages;
+    this._messages = messages;
   }
 
   addContact(contact){
-    this.#messages.addContact(contact);
-    this.messages = this.#messages;
+    this._messages.addContact(contact);
+    this.messages = this._messages;
   }
 
   get to(){
@@ -60,7 +60,7 @@ class VContacts extends SvgPlus {
     return from;
   }
 
-  #selectFrom(c_el) {
+  _selectFrom(c_el) {
     if (this.selected.from != null) {
       this.selected.from.props = {selected: ""}
     }
@@ -68,14 +68,14 @@ class VContacts extends SvgPlus {
     this.selected.from = c_el;
     this.selected.to = null;
   }
-  #selectTo(c_el) {
+  _selectTo(c_el) {
     if (this.selected.to != null) {
       this.selected.to.props = {selected: ""}
     }
     c_el.props = {selected: "true"}
     this.selected.to = c_el;
   }
-  #setTo(contacts){
+  _setTo(contacts){
     this.toCol.innerHTML = "";
     for (let contact of contacts) {
       let c_el = this.toCol.createChild("div", {
@@ -85,7 +85,7 @@ class VContacts extends SvgPlus {
       c_el.createChild("div", {content: contact.name})
       c_el.createChild("div", {content: contact.number})
       c_el.onclick = () => {
-        this.#selectTo(c_el);
+        this._selectTo(c_el);
         const event = new Event("select");
         this.dispatchEvent(event);
       }
